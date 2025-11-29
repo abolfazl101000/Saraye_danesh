@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">دبستان و کودکستان سرای دانش - رشت</title>
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+    <style>
+        :root {
+            /* پالت رنگی حرفه‌ای و شیک */
+            --primary-color: #0056b3; /* آبی کلاسیک */
+            --secondary-color: #1a252f; /* سرمه‌ای تیره */
+            --accent-color: #f39c12; /* طلایی برای تاکید */
+            --text-color: #333;
+            --bg-light: #f8f9fa;
+            --footer-bg: #0c1622;
+            --header-height: 70px;
+            /* رنگ‌بندی جدید بر اساس عکس: بنفش-آبی ملایم */
+            --hero-bg-start: #5a7dff; 
+            --hero-bg-end: #7d5aff;
+            --glass-bg: rgba(255, 255, 255, 0.9); /* شفافیت کمتر برای وضوح بیشتر */
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Vazirmatn', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-color);
+            overflow-x: hidden;
+            line-height: 1.8;
+        }
+        
+        a { text-decoration: none; color: var(--primary-color); }
+        a:hover { color: var(--accent-color); }
+
+        /* --- Header & Navigation --- */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: var(--header-height);
+            padding: 0 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: transparent;
+            transition: background 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        header.scrolled {
+            background: #ffffff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            font-weight: 900;
+            font-size: 1.6rem;
+            color: #fff; /* در حالت Hero هدر سفید است */
+            text-shadow: 0 2px 4px rgba(0,0,0,0.4);
+            transition: color 0.4s ease;
+        }
+
+        header.scrolled .logo {
+            color: var(--secondary-color); /* بعد از اسکرول رنگ تیره می‌شود */
+            text-shadow: none;
+        }
+
+        .hamburger { cursor: pointer; z-index: 1002; padding: 5px; }
+        .line { width: 28px; height: 3px; background-color: #fff; margin: 5px 0; border-radius: 2px; transition: all 0.3s ease; }
+        header.scrolled .line { background-color: var(--secondary-color); }
+
+        /* منوی کشویی شیک (بدون تغییر) */
+        .nav-menu {
+            position: fixed; top: 0; right: -320px; width: 300px; height: 100vh;
+            background: #ffffff; box-shadow: -10px 0 30px rgba(0,0,0,0.2);
+            display: flex; flex-direction: column; padding-top: 100px; z-index: 1001;
+            transition: right 0.5s cubic-bezier(0.64, 0.04, 0.35, 1);
+        }
+        .nav-menu.active { right: 0; }
+        .nav-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; opacity: 0; visibility: hidden; transition: opacity 0.4s; }
+        .nav-overlay.active { opacity: 1; visibility: visible; }
+        .nav-item {
+            padding: 18px 30px; text-decoration: none; color: var(--secondary-color);
+            font-weight: 600; font-size: 1.05rem; border-right: 5px solid transparent;
+            transition: all 0.3s; cursor: pointer;
+        }
+        .nav-item:hover { background-color: #f0f2f5; color: var(--primary-color); border-right-color: var(--accent-color); }
+
+        /* --- Hero Section (استایل مشابه عکس با انیمیشن نقطه‌ای) --- */
+        .hero {
+            position: relative; 
+            height: 85vh; 
+            display: flex; 
+            justify-content: center;
+            align-items: center; 
+            text-align: center; 
+            color: white;
+            margin-top: -var(--header-height);
+            overflow: hidden; 
+            background: linear-gradient(135deg, var(--hero-bg-start) 0%, var(--hero-bg-end) 100%);
+        }
+
+        /* انیمیشن نقطه‌ای متحرک */
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.5;
+            background-image: radial-gradient(white 10%, transparent 10%);
+            background-size: 50px 50px; 
+            animation: dotAnimation 15s linear infinite;
+        }
+
+        @keyframes dotAnimation {
+            0% { background-position: 0 0; }
+            100% { background-position: 50px 50px; } 
+        }
+
+
+        .hero-content {
+            /* استایل شیشه شفاف (Glassmorphism) */
+            background: var(--glass-bg);
+            padding: 40px;
+            border-radius: 25px; 
+            box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            max-width: 800px;
+            width: 90%;
+            z-index: 2;
+            color: var(--secondary-color); 
+        }
+
+        .hero h1 {
+            font-size: 3.5rem; 
+            font-weight: 900; 
+            margin-bottom: 20px;
+            line-height: 1.3;
+            letter-spacing: -1px;
+            color: var(--primary-color);
+        }
+        .hero p { 
+            font-size: 1.2rem; 
+            font-weight: 500; 
+            opacity: 0.85; 
+            margin: 0 auto; 
+            max-width: 450px;
+            color: var(--text-color);
+        }
+        /* --- سایر استایل‌ها (بدون تغییر) --- */
+        .page-content-wrapper { padding-top: var(--header-height); min-height: 100vh; }
+        .hidden { display: none; }
+        .container { padding: 60px 20px; max-width: 1100px; margin: 0 auto; }
+
+        h2.section-title {
+            text-align: center; color: var(--secondary-color); margin-bottom: 50px;
+            font-size: 2rem; font-weight: 800; position: relative;
+        }
+        h2.section-title::after {
+            content: ''; display: block; width: 80px; height: 4px;
+            background: var(--accent-color); margin: 15px auto 0; border-radius: 2px;
+        }
+        .info-card {
+            background: #fff; padding: 40px; border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08); 
+            font-size: 1.1rem; text-align: justify;
+            border-top: 5px solid var(--accent-color);
+        }
+        .card-title {
+             color: var(--primary-color); margin-bottom: 20px; font-weight: 700;
+        }
+        .gallery-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+        .gallery-item {
+            border-radius: 12px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease; height: 220px;
+        }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+        .gallery-item:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.15); }
+        .gallery-item:hover img { transform: scale(1.08); }
+
+        footer {
+            background-color: var(--footer-bg);
+            color: #bdc3c7;
+            padding: 70px 20px 30px;
+            margin-top: 80px;
+        }
+        .footer-content { display: flex; flex-wrap: wrap; justify-content: space-between; max-width: 1100px; margin: 0 auto; }
+        .footer-section { flex: 1; min-width: 250px; margin: 20px; }
+        .footer-section h3 { color: #fff; margin-bottom: 25px; font-weight: 700; }
+
+        .contact-list li {
+            list-style: none; margin-bottom: 15px; display: flex; align-items: center;
+            font-size: 0.95rem; line-height: 1.5;
+        }
+        .contact-list i { margin-left: 12px; color: var(--accent-color); font-style: normal; }
+        
+        /* استایل‌های پنل مدیریت (بدون تغییر) */
+        .btn {
+            padding: 12px 25px; background: var(--primary-color); color: white;
+            border: none; border-radius: 8px; font-weight: 600; cursor: pointer;
+            transition: background 0.3s, transform 0.2s; display: inline-block;
+        }
+        .btn:hover { background: #004494; transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
+        .btn.secondary { background: #95a5a6; }
+        .btn.upload { background: var(--secondary-color); }
+
+        .admin-panel-container {
+            background: #fff; padding: 40px; border-radius: 15px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.05);
+        }
+        .admin-group { margin-bottom: 35px; padding-bottom: 30px; border-bottom: 2px solid #f0f0f0; }
+        .admin-label { display: block; margin-bottom: 10px; font-weight: 700; color: var(--secondary-color); }
+        .admin-input {
+            width: 100%; padding: 12px 15px; border: 2px solid #eee;
+            border-radius: 8px; font-size: 1rem; transition: border 0.3s;
+        }
+        .admin-input:focus { border-color: var(--primary-color); outline: none; }
+        textarea.admin-input { min-height: 120px; resize: vertical; }
+
+        .modal {
+            display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.6); align-items: center; justify-content: center;
+        }
+        .modal-content {
+            background-color: #fff; padding: 40px; border-radius: 15px;
+            width: 90%; max-width: 400px; text-align: center; box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+        .toast {
+            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px);
+            background: #27ae60; color: white; padding: 15px 35px; border-radius: 50px;
+            display: flex; align-items: center; box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            z-index: 3000; opacity: 0; transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+        .toast i { margin-left: 10px; font-size: 1.3rem; font-style: normal; }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .hero-content { padding: 30px 15px; }
+            .footer-content { flex-direction: column; }
+            .footer-section { min-width: 100%; margin: 10px 0; }
+        }
+
+    </style>
+</head>
+<body onload="init()">
+
+    <header id="mainHeader">
+        <div class="logo" id="headerLogo">سرای دانش</div>
+        <div class="hamburger" onclick="toggleMenu()">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
+    </header>
+
+    <div class="nav-overlay" id="navOverlay" onclick="toggleMenu()"></div>
+
+    <nav class="nav-menu" id="navMenu">
+        <div class="nav-item" onclick="navigate('home')">صفحه اصلی</div>
+        <div class="nav-item" onclick="navigate('about')">درباره ما</div>
+        <div class="nav-item" onclick="navigate('gallery-page')">گالری تصاویر</div>
+        <div class="nav-item" onclick="navigate('contact-page')">ارتباط با ما</div>
+        <div class="nav-item" onclick="openCodeModal()" style="color: var(--accent-color);">کد ویژه مدیر</div>
+        <div class="nav-item hidden" id="adminLink" onclick="navigate('admin')" style="background: #f0f2f5; font-weight: 900;">پنل مدیریت</div>
+    </nav>
+
+    <section id="home" class="page-section">
+        <div class="hero">
+            <div class="hero-content">
+                <h1 id="view-school-name">دبستان و کودکستان سرای دانش</h1>
+                <p id="view-hero-desc">در حریم سرای دانش بال بگشاییم و تا اوج آسمان معنا پرواز کنیم.</p>
+            </div>
+        </div>
+
+        <div class="container" style="margin-top: -80px; position: relative; z-index: 10;">
+            <div class="info-card">
+                <h2 style="text-align: center; margin-bottom: 20px;" class="card-title">دبستان دخترانه سرای دانش</h2>
+                <p id="view-home-intro">
+                    جایی برای شکوفایی استعدادها، پرورش خلاقیت و رشد شخصیت دختران عزیزمان.
+
+                    در محیطی شاد، امن و سرشار از عشق به آموزش، معلمان دلسوز سرای دانش با برنامه‌های علمی و تربیتی هدفمند، فرزندان شما را برای آینده‌ای روشن آماده می‌سازند.
+
+                    اینجا، خانه‌ی دوم دانش‌آموزان و سرچشمه لبخندهای روزانه آنان است 🌷
+                </p>
+                <div style="text-align: center; margin-top: 30px;">
+                    <button class="btn" onclick="navigate('about')">بیشتر بدانید</button>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>ارتباط با ما</h3>
+                    <ul class="contact-list">
+                        <li><i>📍</i> <span id="view-footer-address">رشت چمارسرا شهریاران کوچه عمار یک.</span></li>
+                        <li><i>📞</i> <span id="view-footer-phone">01333550256</span></li>
+                        <li><i>⏰</i> شنبه تا چهارشنبه: <span id="view-footer-hours">از ۷ صبح تا ۱۳</span></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>شبکه‌های اجتماعی</h3>
+                    <ul class="contact-list">
+                        <li><i>📷</i> <a id="view-footer-insta" href="https://www.instagram.com/sarayedanesh2025?igsh=dmEyZGRkbmFzZXMx" target="_blank">sarayedanesh2025</a></li>
+                        </ul>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 40px; font-size: 0.9rem; opacity: 0.7;">
+                تمامی حقوق برای دبستان و کودکستان سرای دانش محفوظ است © ۱۴۰۲
+            </div>
+        </footer>
+    </section>
+
+    <section id="about" class="page-section hidden page-content-wrapper">
+        <div class="container">
+            <h2 class="section-title">درباره دبستان و کودکستان سرای دانش</h2>
+            <div class="info-card">
+                <p id="view-about-text">
+                    مدیر و موسس دبستان و کودکستان سرای دانش خانم سکینه عینی
+                    <br>
+                    کارشناس حسابداری ،کارشناس علوم قرآنی ،کارشناس ارشد مدیریت آموزشی ،مدرس علوم قرآنی
+                    <br>
+                    مدیر و موسس کانونهای فرهنگی قرآنی یاس نبوی و حضرت بقیه الله عج .
+                    <br>
+                    شروع فعالیتهای آموزشی از سال 1385
+                    <br>
+                    با سابقه ای درخشان در حوزه آموزش و پرورش فرزندان این مرز و بوم .
+                    <br>
+                    «سرای دانش: جایی که لبخندها، مسیر یادگیری را روشن می‌کنند.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section id="gallery-page" class="page-section hidden page-content-wrapper">
+        <div class="container">
+            <h2 class="section-title">گالری تصاویر مدرسه</h2>
+            <p style="text-align: center; margin-bottom: 30px; color: #666;">گوشه‌ای از فعالیت‌ها و فضای آموزشی ما</p>
+            <div class="gallery-grid" id="view-full-gallery">
+                </div>
+        </div>
+    </section>
+
+    <section id="contact-page" class="page-section hidden page-content-wrapper">
+        <div class="container">
+            <h2 class="section-title">با ما در تماس باشید</h2>
+            <div style="display: flex; flex-wrap: wrap; gap: 30px; justify-content: center;">
+                <div class="info-card" style="flex: 1; min-width: 300px; text-align: center;">
+                    <h3 class="card-title">اطلاعات تماس و آدرس</h3>
+                    <p style="margin: 15px 0; font-size: 1.1rem;"><strong>آدرس:</strong> <br> <span id="view-contact-address">...</span></p>
+                    <p style="margin: 15px 0; font-size: 1.1rem;"><strong>تلفن مستقیم:</strong> <br> <span id="view-contact-phone">...</span></p>
+                    <p style="margin: 15px 0; font-size: 1.1rem;"><strong>ساعت کاری:</strong> <br> شنبه تا چهارشنبه: <span id="view-contact-hours">...</span></p>
+                </div>
+                <div class="info-card" style="flex: 1; min-width: 300px; text-align: center;">
+                     <h3 class="card-title">فضای مجازی</h3>
+                    <p style="margin: 15px 0;">اینستاگرام: <br> <a id="view-contact-insta" href="" target="_blank" style="color: var(--accent-color); direction: ltr; display: block;">...</a></p>
+                    <p style="margin: 15px 0;">واتساپ: <br> <span id="view-contact-whatsapp" style="direction: ltr; display: block;">...</span></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="admin" class="page-section hidden page-content-wrapper" style="background-color: #f0f2f5;">
+        <div class="container">
+            <h2 class="section-title">پنل مدیریت محتوا</h2>
+            <div class="admin-panel-container">
+                
+                <div class="admin-group">
+                    <h3>تنظیمات صفحه اصلی</h3>
+                    <label class="admin-label">نام اصلی مدرسه (در هدر بزرگ):</label>
+                    <input type="text" id="admin-school-name" class="admin-input">
+                    
+                    <label class="admin-label" style="margin-top: 15px;">شعار زیر عنوان اصلی:</label>
+                    <input type="text" id="admin-hero-desc" class="admin-input">
+
+                    <label class="admin-label" style="margin-top: 15px;">متن کارت توضیحات صفحه اصلی:</label>
+                    <textarea id="admin-home-intro" class="admin-input"></textarea>
+                    <button class="btn" style="margin-top: 15px;" onclick="saveData('home')">ذخیره تنظیمات اصلی</button>
+                </div>
+
+                <div class="admin-group">
+                    <h3>تنظیمات صفحه "درباره ما"</h3>
+                    <label class="admin-label">متن کامل توضیحات:</label>
+                    <textarea id="admin-about-text" class="admin-input" style="height: 200px;"></textarea>
+                    <button class="btn" style="margin-top: 15px;" onclick="saveData('about')">ذخیره متن درباره ما</button>
+                </div>
+
+                <div class="admin-group">
+                    <h3>مدیریت اطلاعات تماس</h3>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div>
+                            <label class="admin-label">آدرس دقیق:</label>
+                            <input type="text" id="admin-address" class="admin-input">
+                        </div>
+                        <div>
+                            <label class="admin-label">تلفن تماس:</label>
+                            <input type="text" id="admin-phone" class="admin-input" style="direction: ltr; text-align: right;">
+                        </div>
+                        <div>
+                            <label class="admin-label">ساعت کاری (مثل ۷ صبح تا ۱۳):</label>
+                            <input type="text" id="admin-hours" class="admin-input">
+                        </div>
+                        <div>
+                            <label class="admin-label">نام کاربری اینستاگرام (sarayedanesh2025):</label>
+                            <input type="text" id="admin-insta-user" class="admin-input" style="direction: ltr;">
+                            <label class="admin-label" style="font-weight: normal; margin-top: 5px;">لینک کامل اینستاگرام (مثلا https://www.instagram.com/...):</label>
+                            <input type="url" id="admin-insta-link" class="admin-input" style="direction: ltr;">
+                        </div>
+                        <div style="grid-column: span 2;">
+                            <label class="admin-label">شماره واتساپ:</label>
+                            <input type="text" id="admin-whatsapp" class="admin-input" style="direction: ltr;">
+                        </div>
+                    </div>
+                    <button class="btn" style="margin-top: 20px;" onclick="saveData('contact')">ذخیره اطلاعات تماس</button>
+                </div>
+
+                <div class="admin-group" style="border-bottom: none;">
+                    <h3>مدیریت گالری تصاویر</h3>
+                    <p style="margin-bottom: 15px; color: #555; font-size: 0.9rem;">توجه: تصاویر در مرورگر ذخیره می‌شوند. اگر مرورگر خود را پاک کنید، تصاویر حذف می‌شوند.</p>
+                    
+                    <label for="imageUpload" class="btn upload">
+                        <i style="font-style: normal;">📁</i> انتخاب تصاویر از گالری
+                    </label>
+                    <input type="file" id="imageUpload" multiple accept="image/*" style="display: none;" onchange="handleImageUpload(event)">
+                    
+                    <div id="upload-status" style="margin-top: 10px; color: var(--primary-color);"></div>
+
+                    <div style="margin-top: 30px;">
+                        <h4>پیش‌نمایش تصاویر فعلی:</h4>
+                        <div class="gallery-grid" id="admin-gallery-preview" style="grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 10px; margin-top: 15px;">
+                        </div>
+                         <button class="btn secondary" style="margin-top: 15px;" onclick="clearGallery()">حذف همه تصاویر</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <div id="codeModal" class="modal">
+        <div class="modal-content">
+            <h3 style="margin-bottom: 20px; color: var(--secondary-color);">ورود مدیر سیستم</h3>
+            <p style="margin-bottom: 15px; color: #777;">لطفا کد امنیتی را وارد کنید:</p>
+            <input type="password" id="secretCode" class="admin-input" style="text-align: center; letter-spacing: 2px;" placeholder="****">
+            <div style="margin-top: 20px;">
+                <button class="btn" onclick="checkCode()" style="width: 100%;">بررسی کد</button>
+                <button class="btn secondary" onclick="closeModal()" style="width: 100%; margin-top: 10px; background: transparent; color: #777;">انصراف</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast" class="toast">
+        تغییرات با موفقیت ذخیره شد <i>✔</i>
+    </div>
+
+    <script>
+        // --- داده‌های پیش‌فرض سایت (با محتوای نهایی شما) ---
+        let siteData = {
+            // مقادیر به‌روز شده برای هدر و شوعار
+            schoolName: "دبستان و کودکستان سرای دانش",
+            heroDesc: "در حریم سرای دانش بال بگشاییم و تا اوج آسمان معنا پرواز کنیم.",
+            
+            // مقادیر به‌روز شده برای کارت توضیحات صفحه اصلی
+            homeIntro: "جایی برای شکوفایی استعدادها، پرورش خلاقیت و رشد شخصیت دختران عزیزمان.\n\nدر محیطی شاد، امن و سرشار از عشق به آموزش، معلمان دلسوز سرای دانش با برنامه‌های علمی و تربیتی هدفمند، فرزندان شما را برای آینده‌ای روشن آماده می‌سازند.\n\nاینجا، خانه‌ی دوم دانش‌آموزان و سرچشمه لبخندهای روزانه آنان است 🌷",
+            
+            // مقادیر به‌روز شده برای درباره ما
+            aboutText: "مدیر و موسس دبستان و کودکستان سرای دانش خانم سکینه عینی\nکارشناس حسابداری ،کارشناس علوم قرآنی ،کارشناس ارشد مدیریت آموزشی ،مدرس علوم قرآنی\nمدیر و موسس کانونهای فرهنگی قرآنی یاس نبوی و حضرت بقیه الله عج .\nشروع فعالیتهای آموزشی از سال 1385\nبا سابقه ای درخشان در حوزه آموزش و پرورش فرزندان این مرز و بوم .\n«سرای دانش: جایی که لبخندها، مسیر یادگیری را روشن می‌کنند.",
+            
+            // مقادیر به‌روز شده برای اطلاعات تماس (با حذف تلگرام و حفظ واتساپ جدید)
+            contact: {
+                address: "رشت چمارسرا شهریاران کوچه عمار یک.",
+                phone: "01333550256",
+                hours: "از ۷ صبح تا ۱۳",
+                instaUser: "sarayedanesh2025",
+                instaLink: "https://www.instagram.com/sarayedanesh2025?igsh=dmEyZGRkbmFzZXMx",
+                // تلگرام حذف شد
+                whatsapp: "09113783150" // شماره واتساپ جدید
+            },
+            
+            gallery: [
+                "https://images.unsplash.com/photo-1588072432836-e10032774350?w=600&auto=format&fit=crop&q=60",
+                "https://images.unsplash.com/photo-1577896851231-70ef18881754?w=600&auto=format&fit=crop&q=60",
+                "https://images.unsplash.com/photo-1509062522246-3755977927d7?w=600&auto=format&fit=crop&q=60",
+                "https://images.unsplash.com/photo-1568306943895-03700c8d5406?w=600&auto=format&fit=crop&q=60"
+            ]
+        };
+
+        const STORAGE_KEY = 'sarayeDaneshSiteData';
+        let currentPage = 'home'; 
+
+        // --- مدیریت ذخیره‌سازی داده‌ها (LocalStorage) ---
+
+        function loadDataFromStorage() {
+            const savedData = localStorage.getItem(STORAGE_KEY);
+            if (savedData) {
+                siteData = Object.assign(siteData, JSON.parse(savedData));
+            }
+        }
+
+        function saveDataToStorage() {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(siteData));
+        }
+
+        // --- توابع رندرینگ و نمایش ---
+
+        function renderSite() {
+            // بروزرسانی عنوان مرورگر
+            document.getElementById('pageTitle').innerText = siteData.schoolName + " - رشت";
+            
+            // صفحه اصلی (Hero)
+            document.getElementById('view-school-name').innerText = siteData.schoolName;
+            document.getElementById('view-hero-desc').innerText = siteData.heroDesc;
+            document.getElementById('view-home-intro').innerHTML = siteData.homeIntro.replace(/\n/g, '<br>');
+
+            // درباره ما
+            document.getElementById('view-about-text').innerHTML = siteData.aboutText.replace(/\n/g, '<br>');
+            
+            // تماس و فوتر
+            document.getElementById('view-footer-address').innerText = siteData.contact.address;
+            document.getElementById('view-contact-address').innerText = siteData.contact.address;
+            
+            document.getElementById('view-footer-phone').innerText = siteData.contact.phone;
+            document.getElementById('view-contact-phone').innerText = siteData.contact.phone;
+            
+            document.getElementById('view-footer-hours').innerText = siteData.contact.hours;
+            document.getElementById('view-contact-hours').innerText = siteData.contact.hours;
+
+            // اینستاگرام
+            const instaElementFooter = document.getElementById('view-footer-insta');
+            const instaElementContact = document.getElementById('view-contact-insta');
+
+            instaElementFooter.href = siteData.contact.instaLink;
+            instaElementFooter.innerText = siteData.contact.instaUser;
+
+            instaElementContact.href = siteData.contact.instaLink;
+            instaElementContact.innerText = siteData.contact.instaUser;
+
+            // واتساپ
+            document.getElementById('view-contact-whatsapp').innerText = siteData.contact.whatsapp;
+
+            renderGallery();
+        }
+
+        function renderGallery() {
+             const galleryHTML = siteData.gallery.map(src => 
+                `<div class="gallery-item"><img src="${src}" alt="تصویر مدرسه"></div>`
+            ).join('');
+            document.getElementById('view-full-gallery').innerHTML = galleryHTML;
+            
+            const adminPreviewHTML = siteData.gallery.map(src => 
+                `<div style="height: 80px; border-radius: 8px; overflow: hidden;"><img src="${src}" style="width:100%; height:100%; object-fit:cover;"></div>`
+            ).join('');
+             document.getElementById('admin-gallery-preview').innerHTML = adminPreviewHTML;
+        }
+
+        // --- توابع ناوبری و UI ---
+
+        function toggleMenu() {
+            document.getElementById('navMenu').classList.toggle('active');
+            document.getElementById('navOverlay').classList.toggle('active');
+        }
+
+        function navigate(pageId) {
+            document.querySelectorAll('.page-section').forEach(section => {
+                section.classList.add('hidden');
+            });
+            
+            document.getElementById(pageId).classList.remove('hidden');
+            currentPage = pageId;
+            toggleMenu(); 
+
+            const header = document.getElementById('mainHeader');
+            if (pageId === 'home' && window.scrollY <= 50) {
+                // در صفحه اصلی و بالا، هدر شفاف است
+                header.classList.remove('scrolled');
+                document.getElementById('headerLogo').style.color = '#fff';
+            } else {
+                // در صفحات دیگر یا پس از اسکرول، هدر سفید است
+                header.classList.add('scrolled');
+                document.getElementById('headerLogo').style.color = 'var(--secondary-color)';
+            }
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // --- توابع پنل مدیریت ---
+
+        function loadAdminValues() {
+            document.getElementById('admin-school-name').value = siteData.schoolName;
+            document.getElementById('admin-hero-desc').value = siteData.heroDesc;
+            document.getElementById('admin-home-intro').value = siteData.homeIntro;
+            document.getElementById('admin-about-text').value = siteData.aboutText;
+            document.getElementById('admin-address').value = siteData.contact.address;
+            document.getElementById('admin-phone').value = siteData.contact.phone;
+            document.getElementById('admin-hours').value = siteData.contact.hours;
+            document.getElementById('admin-insta-user').value = siteData.contact.instaUser;
+            document.getElementById('admin-insta-link').value = siteData.contact.instaLink;
+            // تلگرام حذف شد
+            document.getElementById('admin-whatsapp').value = siteData.contact.whatsapp;
+            renderGallery(); 
+        }
+
+        function saveData(section) {
+            if (section === 'home') {
+                siteData.schoolName = document.getElementById('admin-school-name').value;
+                siteData.heroDesc = document.getElementById('admin-hero-desc').value;
+                siteData.homeIntro = document.getElementById('admin-home-intro').value;
+            } else if (section === 'about') {
+                siteData.aboutText = document.getElementById('admin-about-text').value;
+            } else if (section === 'contact') {
+                siteData.contact.address = document.getElementById('admin-address').value;
+                siteData.contact.phone = document.getElementById('admin-phone').value;
+                siteData.contact.hours = document.getElementById('admin-hours').value;
+                siteData.contact.instaUser = document.getElementById('admin-insta-user').value;
+                siteData.contact.instaLink = document.getElementById('admin-insta-link').value;
+                // تلگرام حذف شد
+                siteData.contact.whatsapp = document.getElementById('admin-whatsapp').value;
+            }
+
+            saveDataToStorage(); 
+            renderSite(); 
+            showToast(); 
+        }
+
+        function openCodeModal() {
+            document.getElementById('codeModal').style.display = 'flex';
+            toggleMenu(); 
+        }
+
+        function closeModal() {
+            document.getElementById('codeModal').style.display = 'none';
+             document.getElementById('secretCode').value = '';
+        }
+
+        function checkCode() {
+            const input = document.getElementById('secretCode').value;
+            if(input === "admin1234") {
+                document.getElementById('adminLink').classList.remove('hidden');
+                closeModal();
+                showToast("پنل مدیریت فعال شد!");
+                navigate('admin');
+                loadAdminValues();
+            } else {
+                alert("کد وارد شده اشتباه است!");
+            }
+        }
+        
+        function handleImageUpload(event) {
+            const files = event.target.files;
+            if (files.length === 0) return;
+
+            document.getElementById('upload-status').innerText = `در حال پردازش ${files.length} تصویر...`;
+            let processedCount = 0;
+
+            Array.from(files).forEach(file => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    siteData.gallery.push(e.target.result);
+                    processedCount++;
+                    
+                    if(processedCount === files.length) {
+                         document.getElementById('upload-status').innerText = "تصاویر با موفقیت اضافه شدند!";
+                         renderGallery(); 
+                         saveDataToStorage(); 
+                         showToast("تصاویر جدید به گالری اضافه شد");
+                         setTimeout(() => { document.getElementById('upload-status').innerText = ""; }, 3000);
+                    }
+                }
+                reader.readAsDataURL(file);
+            });
+            event.target.value = '';
+        }
+
+        function clearGallery() {
+            if(confirm("آیا مطمئن هستید که می‌خواهید تمام تصاویر گالری را حذف کنید؟")) {
+                siteData.gallery = [];
+                renderGallery();
+                saveDataToStorage();
+                showToast("گالری خالی شد");
+            }
+        }
+        
+        function showToast(msg = "تغییرات با موفقیت ذخیره شد") {
+            const toast = document.getElementById('toast');
+            toast.innerHTML = `${msg} <i>✔</i>`;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // --- تابع شروع اولیه و مدیریت اسکرول ---
+        function init() {
+            loadDataFromStorage();
+            renderSite();
+            navigate('home'); 
+        }
+        
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('mainHeader');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+                document.getElementById('headerLogo').style.color = 'var(--secondary-color)';
+            } else if(currentPage === 'home') {
+                 header.classList.remove('scrolled');
+                 document.getElementById('headerLogo').style.color = '#fff';
+            }
+        });
+    </script>
+</body>
+</html>
